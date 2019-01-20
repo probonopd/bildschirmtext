@@ -1,0 +1,16 @@
+language: generic
+sudo: require
+dist: trusty
+
+script:
+  - wget https://github.com/AppImage/pkg2appimage/raw/master/pkg2appimage
+  - bash -ex pkg2appimage Bildschirmtext
+  
+after_success:
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - bash upload.sh out/*.AppImage*
+  
+branches:
+  except:
+    - # Do not build tags that we create when we upload to GitHub Releases
+    - /^(?i:continuous)/
